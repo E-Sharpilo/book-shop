@@ -4,7 +4,7 @@ import './spinner.css'
 
 
 const Spinner = () => {
-    return <div>spinner</div>
+    return <div>Loading</div>
 }
 
 export default Spinner
