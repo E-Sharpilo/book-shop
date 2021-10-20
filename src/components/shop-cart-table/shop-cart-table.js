@@ -1,7 +1,34 @@
 import React from 'react';
 import './shop-cart-table.css'
+import { connect } from 'react-redux'
 
-const ShopCartTable = () => {
+const ShopCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) => {
+    const RenderRow = (item, idx) => {
+        const { id, name, count, total } = item;
+        return (
+            <tr key={id}>
+                <td>{idx + 1}</td>
+                <td>{name}</td>
+                <td>{count}</td>
+                <td>${total}</td>
+                <td>
+
+                    <button onClick={() => onIncrease(id)}
+                        className="btn btn-outline-success">
+                        <i className="bi bi-plus-circle"></i>
+                    </button>
+                    <button onClick={() => onDecrease(id)}
+                        className="btn btn-outline-warning">
+                        <i className="bi bi-dash-circle"></i>
+                    </button>
+                    <button onClick={() => onDelete(id)}
+                        className="btn btn-outline-danger">
+                        <i className="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        )
+    }
     return (
         <div className="shop-cart-table">
             <h2>Your Order</h2>
@@ -16,31 +43,38 @@ const ShopCartTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Production-Ready Microservices</td>
-                        <td>2</td>
-                        <td>$40</td>
-                        <td>
-
-                            <button className="btn btn-outline-success">
-                                <i className="bi bi-plus-circle"></i>
-                            </button>
-                            <button className="btn btn-outline-warning">
-                                <i className="bi bi-dash-circle"></i>
-                            </button>
-                            <button className="btn btn-outline-danger">
-                                <i className="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    {
+                        items.map(RenderRow)
+                    }
                 </tbody>
             </table>
             <div className="total">
-                Total: $80
+                Total: ${total}
             </div>
         </div>
     )
 }
 
-export default ShopCartTable
+
+const mapStateToProps = ({ cartItems, orderTotal }) => {
+    return {
+        items: cartItems,
+        total: orderTotal
+    }
+}
+
+const mapDispatchToProps = () => {
+    return {
+        onIncrease: (id) => {
+            console.log(`Increased ${id}`)
+        },
+        onDecrease: (id) => {
+            console.log(`Decreased ${id}`)
+        },
+        onDelete: (id) => {
+            console.log(`Deleted ${id}`)
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopCartTable);
