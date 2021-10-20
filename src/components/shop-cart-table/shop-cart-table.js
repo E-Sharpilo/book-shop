@@ -7,29 +7,33 @@ const ShopCartTable = () => {
             <h2>Your Order</h2>
             <table className="table">
                 <thead>
-                    <th>#</th>
-                    <th>Item</th>
-                    <th>Count</th>
-                    <th>Price</th>
-                    <th>Actions</th>
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Count</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <td>1</td>
-                    <td>Production-Ready Microservices</td>
-                    <td>2</td>
-                    <td>$40</td>
-                    <td>
+                    <tr>
+                        <td>1</td>
+                        <td>Production-Ready Microservices</td>
+                        <td>2</td>
+                        <td>$40</td>
+                        <td>
 
-                        <button className="btn btn-outline-success">
-                            <i class="bi bi-plus-circle"></i>
-                        </button>
-                        <button className="btn btn-outline-warning">
-                            <i class="bi bi-dash-circle"></i>
-                        </button>
-                        <button className="btn btn-outline-danger">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
+                            <button className="btn btn-outline-success">
+                                <i className="bi bi-plus-circle"></i>
+                            </button>
+                            <button className="btn btn-outline-warning">
+                                <i className="bi bi-dash-circle"></i>
+                            </button>
+                            <button className="btn btn-outline-danger">
+                                <i className="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div className="total">
