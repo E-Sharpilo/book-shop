@@ -1,74 +1,9 @@
-
-const initialState = {
-    books: [],
-    loading: true,
-    error: null,
-    cartItems: [],
-    orderTotal: 0
-}
-
-const updateCartItem = (cartItems, item, idx) => {
-    if (idx === -1) {
-        return [
-            ...cartItems,
-            item
-        ]
-    }
-    return [
-        ...cartItems.slice(0, idx),
-        item,
-        ...cartItems.slice(idx + 1)
-    ]
-}
-
-const updateItem = (book, item = {}) => {
-    const { id = book.id, count = 0, title = book.title, total = 0 } = item
+import updateBookList from './book-list';
+import updateShopingCart from './shoping-cart'
+const reducer = (state, action) => {
     return {
-        id,
-        title,
-        count: count + 1,
-        tital: total + book.price
+        booksList: updateBookList(state, action),
+        shoppingCart: updateShopingCart(state, action)
     }
 }
-
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'FETCH_BOOKS_REQUEST':
-            return {
-                ...state,
-                books: [],
-                loading: true,
-                error: null
-            }
-        case 'FETCH_BOOKS_SUCCESS':
-            return {
-                ...state,
-                books: action.payload,
-                loading: false,
-                error: null
-            }
-        case 'FETCH_BOOKS_FAILURE':
-            return {
-                ...state,
-                books: [],
-                loading: false,
-                error: action.payload
-            }
-        case 'BOOK_ADDED_TO_CART':
-            const bookId = action.payload;
-            const book = state.books.find((book) => book.id === bookId)
-            const itemIndex = state.cartItems.findIndex(({ id }) => id === bookId)
-            const item = state.cartItems[itemIndex];
-            const newItem = updateItem(book, item)
-            return {
-                ...state,
-                cartItems: updateCartItem(state.cartItems, newItem, itemIndex)
-            }
-
-        default:
-            return state;
-    }
-}
-
-
 export default reducer
